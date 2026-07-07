@@ -24,8 +24,11 @@ app.use(
 );
 app.use(express.json());
 
-app.get('/api/health', (req, res) => {
-  res.json({ success: true, data: { status: 'ok', env: env.nodeEnv } });
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is running"
+  });
 });
 
 app.use('/api/auth', authRoutes);
