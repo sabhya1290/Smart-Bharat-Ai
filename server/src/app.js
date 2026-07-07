@@ -16,9 +16,14 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 const app = express();
 
 app.use(helmet());
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL,
+];
+
 app.use(
   cors({
-    origin: [env.clientUrl, 'http://localhost:5173'],
+    origin: allowedOrigins,
     credentials: true,
   })
 );
