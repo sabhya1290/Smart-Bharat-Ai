@@ -1,151 +1,301 @@
-# Smart Bharat AI — Your Civic Companion
+<div align="center">
 
-A GenAI-powered civic platform helping Indian citizens access government services, report public
-issues, receive personalized scheme recommendations, track complaints, and use the platform in
-English, Hindi, or Hinglish.
+# 🇮🇳 Smart Bharat AI
 
-See `docs/PRD.md` for the full product spec and `docs/PLAN.md` for the build plan/architecture.
+### Your AI-Powered Civic Companion for India
 
-## Tech Stack
+A GenAI-powered civic platform that helps citizens discover government services, report public issues, receive personalized scheme recommendations, and track complaints in **English, Hindi, and Hinglish**.
 
-**Frontend:** React + Vite, Tailwind CSS, React Router DOM, Lucide React, Recharts, React Hook Form
-+ Zod, Axios.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-0A66C2?style=for-the-badge)](https://smart-bharat-ai-navy.vercel.app/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge\&logo=react\&logoColor=white)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge\&logo=node.js\&logoColor=white)](https://nodejs.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=for-the-badge\&logo=supabase\&logoColor=white)](https://supabase.com/)
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-AI-4285F4?style=for-the-badge\&logo=google\&logoColor=white)](https://ai.google.dev/)
 
-**Backend:** Node.js + Express, JWT auth, bcryptjs, Multer, dotenv, CORS, express-rate-limit, Helmet.
+[🌐 Live Demo](https://smart-bharat-ai-navy.vercel.app/) · [🐛 Report Bug](https://github.com/sabhya1290/Smart-Bharat-Ai/issues) · [✨ Request Feature](https://github.com/sabhya1290/Smart-Bharat-Ai/issues)
 
-**Data:** Supabase Postgres + Supabase Storage (image uploads), accessed via the Supabase JS client
-in the backend only.
+</div>
 
-**AI:** Google Gemini API (`gemini-1.5-flash`) via a backend service layer, with a deterministic,
-structured mock fallback used automatically when `GEMINI_API_KEY` is not set or a Gemini call fails —
-the app is always demo-ready.
+---
 
-## Monorepo Structure
+## 📖 Table of Contents
 
+* [About the Project](#-about-the-project)
+* [Key Features](#-key-features)
+* [Tech Stack](#-tech-stack)
+* [Project Structure](#-project-structure)
+* [Getting Started](#-getting-started)
+* [Environment Variables](#-environment-variables)
+* [API Reference](#-api-reference)
+* [Deployment](#-deployment)
+* [Testing Checklist](#-testing-checklist)
+* [Contributing](#-contributing)
+* [License](#-license)
+
+---
+
+## 🚀 About the Project
+
+**Smart Bharat AI** is a civic-tech platform designed to make public services easier to access for Indian citizens.
+
+Users can explore government services, receive personalized scheme recommendations, report civic problems with images, track complaint status, and interact with an AI civic assistant. The platform is designed to be accessible through English, Hindi, and Hinglish.
+
+> The app remains demo-ready even without a Gemini API key because it automatically uses structured mock AI responses when the API is unavailable.
+
+---
+
+## ✨ Key Features
+
+| Feature                         | Description                                                                                             |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 🤖 AI Civic Assistant           | Ask questions about civic services and receive helpful structured responses.                            |
+| 🏛️ Government Service Finder   | Search and filter government services by category and state.                                            |
+| 🎯 Personalized Recommendations | Get scheme recommendations based on profile details such as age group, state, occupation, and category. |
+| 🚨 Civic Issue Reporting        | Report local public issues and attach images as evidence.                                               |
+| 🔎 Complaint Tracker            | Track complaint status and view a detailed complaint timeline.                                          |
+| 🔖 Saved Services               | Bookmark useful services and access them later.                                                         |
+| 📊 Transparency Dashboard       | View public issue statistics and visual charts.                                                         |
+| 🌐 Multilingual Experience      | Use the platform in English, Hindi, or Hinglish.                                                        |
+| ♿ Accessibility Features        | High-contrast mode and adjustable font size for better usability.                                       |
+| 📱 Responsive Design            | Works across desktop, tablet, and mobile screens.                                                       |
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+* React
+* Vite
+* Tailwind CSS
+* React Router DOM
+* Lucide React
+* Recharts
+* React Hook Form + Zod
+* Axios
+
+### Backend
+
+* Node.js
+* Express.js
+* JWT Authentication
+* bcryptjs
+* Multer
+* Helmet
+* CORS
+* express-rate-limit
+* dotenv
+
+### Database & Storage
+
+* Supabase PostgreSQL
+* Supabase Storage
+
+### AI
+
+* Google Gemini API (`gemini-1.5-flash`)
+* Structured mock fallback for demo mode
+
+---
+
+## 📂 Project Structure
+
+```text
+Smart-Bharat-Ai/
+│
+├── client/                 # React + Vite frontend
+├── server/                 # Node.js + Express backend
+├── database/               # SQL schema and seed files
+├── docs/                   # PRD, architecture plan, API documentation
+├── render.yaml             # Render backend deployment configuration
+└── README.md
 ```
-smart-bharat-ai/
-  client/     React + Vite frontend
-  server/     Node + Express backend
-  database/   SQL schema + seed files (run in Supabase SQL editor)
-  docs/       PRD.md, PLAN.md, API.md
-  render.yaml Backend deploy config for Render
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+Make sure you have installed:
+
+* Node.js 18+
+* npm
+* A Supabase project
+* Optional: Google Gemini API key
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/sabhya1290/Smart-Bharat-Ai.git
+cd Smart-Bharat-Ai
 ```
 
-## API Reference
+### 2. Set Up the Database
 
-All routes are prefixed with `/api`. Auth-protected routes require `Authorization: Bearer <token>`.
+1. Create a project on [Supabase](https://supabase.com/).
+2. Open the Supabase SQL Editor.
+3. Run these files in order:
 
-| Method | Route                          | Auth | Description                                   |
-|--------|---------------------------------|------|------------------------------------------------|
-| POST   | `/auth/register`                | No   | Create account, returns JWT + user             |
-| POST   | `/auth/login`                   | No   | Log in, returns JWT + user                     |
-| GET    | `/auth/me`                      | Yes  | Get current user                               |
-| GET    | `/profile`                      | Yes  | Get current user profile (alias of `/auth/me`) |
-| PUT    | `/profile`                      | Yes  | Update profile fields                          |
-| GET    | `/services`                     | No   | List services (`?search=&category=&state=`)    |
-| GET    | `/services/:id`                 | No   | Get one service                                |
-| GET    | `/services/bookmarked`          | Yes  | List current user's saved services             |
-| POST   | `/services/:id/bookmark`        | Yes  | Save a service                                 |
-| DELETE | `/services/:id/bookmark`        | Yes  | Remove a saved service                         |
-| GET    | `/recommendations`              | Yes  | Rule-based personalized scheme recommendations |
-| POST   | `/ai/chat`                      | Yes  | Send a message to the civic assistant          |
-| GET    | `/ai/chat/history`              | Yes  | Get chat history                               |
-| POST   | `/issues`                       | Yes  | Report a civic issue (`multipart/form-data`, field `image`) |
-| GET    | `/issues/mine`                  | Yes  | List current user's reported issues            |
-| GET    | `/issues/:complaintId`          | No   | Look up a complaint by ID (public tracker)     |
-| GET    | `/complaints/:complaintId/timeline` | No | Get a complaint's status timeline           |
-| POST   | `/complaints/:complaintId/updates`  | No | Append a status update (demo/manual use)    |
-| GET    | `/dashboard/summary`            | No   | Transparency dashboard aggregate stats         |
+```text
+database/schema.sql
+database/seed_services.sql
+database/seed_scheme_rules.sql
+database/seed_sample_complaints.sql
+```
 
-## Local Setup
+4. Create a public storage bucket named:
 
-### 1. Database (Supabase)
+```text
+civic-issues
+```
 
-1. Create a project at [supabase.com](https://supabase.com).
-2. Open the SQL Editor and run, in order:
-   - `database/schema.sql`
-   - `database/seed_services.sql`
-   - `database/seed_scheme_rules.sql`
-   - `database/seed_sample_complaints.sql`
-3. Create a **public** Storage bucket named `civic-issues` (Storage → New Bucket → Public bucket).
-4. Copy your Project URL and `service_role` key (Settings → API) for the backend `.env`.
-
-### 2. Backend
+### 3. Run the Backend
 
 ```bash
 cd server
-cp .env.example .env   # fill in JWT_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, GEMINI_API_KEY (optional)
+cp .env.example .env
 npm install
-npm run dev             # http://localhost:5000
+npm run dev
 ```
 
-Without `GEMINI_API_KEY`, `/api/ai/chat` automatically returns structured mock responses — the app
-remains fully demoable.
+The backend will run on:
 
-### 3. Frontend
+```text
+http://localhost:5000
+```
+
+### 4. Run the Frontend
+
+Open a new terminal:
 
 ```bash
 cd client
-cp .env.example .env    # VITE_API_BASE_URL=http://localhost:5000/api
+cp .env.example .env
 npm install
-npm run dev              # http://localhost:5173
+npm run dev
 ```
 
-## Environment Variables
+The frontend will run on:
 
-**server/.env**
+```text
+http://localhost:5173
+```
 
-| Variable | Required | Description |
-|---|---|---|
-| `PORT` | No (default 5000) | Server port |
-| `JWT_SECRET` | Yes | Secret used to sign JWTs |
-| `JWT_EXPIRES_IN` | No (default 7d) | Token lifetime |
-| `GEMINI_API_KEY` | No | Enables real Gemini responses; falls back to mock if unset |
-| `SUPABASE_URL` | Yes (for DB features) | Supabase project URL |
-| `SUPABASE_SERVICE_ROLE_KEY` | Yes (for DB features) | Supabase service role key (backend only, never expose) |
-| `SUPABASE_STORAGE_BUCKET` | No (default civic-issues) | Storage bucket for issue images |
-| `CLIENT_URL` | Yes (prod) | Deployed frontend URL, for CORS |
+---
 
-**client/.env**
+## 🔐 Environment Variables
 
-| Variable | Required | Description |
-|---|---|---|
-| `VITE_API_BASE_URL` | Yes | Base URL of the backend API, e.g. `https://your-api.onrender.com/api` |
+### Server Environment Variables
 
-## Deployment
+Create a `.env` file inside the `server` folder:
 
-### Supabase
-Follow the "Local Setup → Database" steps above against your production Supabase project.
+```env
+PORT=5000
+JWT_SECRET=your_secret_key
+JWT_EXPIRES_IN=7d
+GEMINI_API_KEY=your_gemini_api_key
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+SUPABASE_STORAGE_BUCKET=civic-issues
+CLIENT_URL=http://localhost:5173
+```
 
-### Backend → Render
-1. Push this repo to GitHub.
-2. In Render, create a new **Blueprint** from the repo (uses the root `render.yaml`), or manually
-   create a Web Service with root directory `server`, build command `npm install`, start command
-   `node src/server.js`.
-3. Set the env vars listed above in the Render dashboard (`JWT_SECRET`, `GEMINI_API_KEY`,
-   `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `CLIENT_URL`).
-4. Deploy and note the resulting URL, e.g. `https://smart-bharat-ai-server.onrender.com`.
+### Client Environment Variables
 
-### Frontend → Vercel
-1. Import the repo in Vercel, set the root directory to `client`.
-2. Framework preset: Vite. Build command `npm run build`, output directory `dist`.
-3. Set env var `VITE_API_BASE_URL` to your Render backend URL + `/api`.
-4. Deploy. `client/vercel.json` handles SPA routing rewrites.
-5. Update `CLIENT_URL` on Render to your Vercel URL so CORS allows it.
+Create a `.env` file inside the `client` folder:
 
-## Final Testing Checklist
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+```
 
-- [ ] Register a new account, then log out and log back in.
-- [ ] Ask the AI Assistant a suggested question — verify a structured response renders (mock or Gemini).
-- [ ] Copy an AI response and use the text-to-speech button.
-- [ ] Browse Service Finder, filter by category, open a service's details page.
-- [ ] Save a service, confirm it appears under Saved Services, then remove it.
-- [ ] Complete your profile (age group, state, occupation, category) and check Recommendations updates.
-- [ ] Report a civic issue with an uploaded photo — confirm a complaint ID like `SB-2026-1042` is shown.
-- [ ] Track that complaint ID on the Complaint Tracker page and confirm the timeline renders.
-- [ ] View the same complaint under My Complaints.
-- [ ] Open the Transparency Dashboard and confirm charts render (with the "Demo transparency data"
-      badge visible if fewer than 20 complaints exist).
-- [ ] Switch language between English, Hindi, and Hinglish and confirm navigation labels update.
-- [ ] Toggle high-contrast mode and adjust font size from Profile & Settings.
-- [ ] Resize the browser to mobile width and confirm the hamburger menu and layout work correctly.
+> Never expose `SUPABASE_SERVICE_ROLE_KEY` in the frontend.
+
+---
+
+## 🔌 API Reference
+
+All API routes use the `/api` prefix.
+
+| Method | Endpoint                 | Authentication | Description                        |
+| ------ | ------------------------ | -------------: | ---------------------------------- |
+| POST   | `/auth/register`         |             No | Register a new user                |
+| POST   | `/auth/login`            |             No | Log in and receive JWT             |
+| GET    | `/auth/me`               |            Yes | Get current user details           |
+| GET    | `/services`              |             No | Browse government services         |
+| GET    | `/services/:id`          |             No | View service details               |
+| POST   | `/services/:id/bookmark` |            Yes | Save a service                     |
+| DELETE | `/services/:id/bookmark` |            Yes | Remove saved service               |
+| GET    | `/recommendations`       |            Yes | Get personalized recommendations   |
+| POST   | `/ai/chat`               |            Yes | Send a message to the AI assistant |
+| POST   | `/issues`                |            Yes | Report a civic issue with image    |
+| GET    | `/issues/mine`           |            Yes | View reported issues               |
+| GET    | `/issues/:complaintId`   |             No | Track a complaint                  |
+| GET    | `/dashboard/summary`     |             No | View transparency dashboard data   |
+
+For protected routes, send:
+
+```http
+Authorization: Bearer <token>
+```
+
+---
+
+
+## ✅ Testing Checklist
+
+* [ ] Register and log in successfully.
+* [ ] Use the AI Civic Assistant.
+* [ ] Browse and filter government services.
+* [ ] Save and remove bookmarked services.
+* [ ] Update profile information and view recommendations.
+* [ ] Report a civic issue with an image.
+* [ ] Track a complaint using its complaint ID.
+* [ ] View complaint timeline.
+* [ ] Check charts in the Transparency Dashboard.
+* [ ] Switch between English, Hindi, and Hinglish.
+* [ ] Test high-contrast mode and font-size settings.
+* [ ] Test the application on mobile screen sizes.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork this repository.
+2. Create a new branch:
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+3. Make your changes and commit them:
+
+```bash
+git commit -m "Add your feature"
+```
+
+4. Push your branch:
+
+```bash
+git push origin feature/your-feature-name
+```
+
+5. Open a Pull Request.
+
+---
+
+## 📄 License
+
+This project is created for educational, hackathon, and civic-tech demonstration purposes.
+
+---
+
+<div align="center">
+
+Made with ❤️ for a smarter and more accessible Bharat.
+
+[⬆ Back to Top](#-smart-bharat-ai)
+
+</div>
